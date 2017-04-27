@@ -1,0 +1,209 @@
+/* GLOBAL RESET */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+$primary-background: #f5f5f5;
+$secondary-background: #ffffff;
+$primary-color: #aaaaaa;
+$secondary-color: darken($primary-color, 15%);
+
+/* GLOBAL SETTINGS */
+body {
+    background-color: $primary-background;
+
+    font-family: 'Slabo 27px', serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Oswald', sans-serif;
+}
+
+button {
+    display: inline-block;
+    border: none;
+    padding: 8px 24px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid $primary-color;
+}
+
+.main-container {
+    margin: 0 auto;
+    border-collapse:separate;
+    border-spacing: 1em;
+    width: 50%;
+}
+
+.widget {
+    background-color: $secondary-background;
+    color: $primary-color;
+    margin: 1em;
+    padding: 0.5em;
+    border: 1px solid $primary-color;
+    border-radius: 5px;
+}
+
+.widget h3 {
+    font-size: 125%;
+    margin-bottom: 0.5em;
+}
+
+.widget table {
+    width: 100%;
+    align-content: center;
+}
+
+.widget th {
+    font-weight: bold;
+    color: $secondary-color;
+}
+
+.widget tr {
+    margin: 0 0.25em;
+}
+
+.widget th.value {
+    text-align: right;
+    width: 33.333%;
+}
+
+.widget th.description {
+    width: 33.333%;
+}
+
+.widget th.created {
+    text-align: left;
+    width: 33.333%;
+}
+
+.widget td.created {
+    text-align: left;
+}
+
+.widget td.description {
+    text-align: center;
+}
+
+.widget td.value {
+    text-align: right;
+    font-weight: bold;
+}
+
+.table-container {
+    display: table;
+    width: 100%;
+}
+
+.base-widget {
+    width: auto;
+    margin: 1em;
+    display: table-row;
+    padding: 0.5em;
+}
+
+// BALANCE WIDGET
+.balance-widget {
+    display: table-cell;
+    width: 50%;
+}
+
+.balance-widget table {
+    height: 100%
+}
+
+.balance-widget tr {
+    height: 33.333%;
+}
+
+.balance-widget .value {
+    color: $secondary-color;
+}
+
+// INPUT WIDGET
+
+.input-widget {
+    display: table-cell;
+    margin-right: 1em;
+    width: 50%;
+}
+
+.input-widget .input-container {
+    width: 100%;
+}
+
+.input-widget input {
+    width: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.input-widget label {
+    width: 100%;
+    align: center;
+}
+
+.tx-widget {
+    width: auto;
+}
+
+.chart-widget {
+    display: table-cell
+
+};
+
+.big-button {
+    width: 100%;
+
+}
+
+.add-income-button {
+    color: white;
+    background-color: #4caf50;
+}
+
+.add-expense-button {
+    color: white;
+    background: red;
+}
