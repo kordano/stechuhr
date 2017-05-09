@@ -13,47 +13,55 @@
   (:require-macros [superv.async :refer [go-try <? go-loop-try]]
                    [cljs.core.async.macros :refer [go-loop]]))
 
-(def user "mail:alice@stechuhr.de")
-(def ormap-id #uuid "8c518048-1a31-4f0a-bd71-f49ef898db10")
-(def uri "ws://127.0.0.1:31778")
-
 (enable-console-print!)
+
+(def user "mail:alice@stechuhr.de")
+
+(def ormap-id #uuid "07f6aae2-2b46-4e44-bfd8-058d13977a8a")
+
+(def uri "ws://127.0.0.1:31778")
 
 (defonce val-atom (atom {:captures #{}}))
 
 (def stream-eval-fns
-  {'assoc (fn [a new]
+  {'add (fn [a new]
             (swap! a update-in [:captures] conj new)
             a)
-   'dissoc (fn [a new]
+   'remove (fn [a new]
              (swap! a update-in [:captures] (fn [old] (set (remove #{new} old))))
              a)})
 
 (defn setup-replikativ []
-  (go-try S
-          (let [store (<? S (new-mem-store))
-                peer (<? S (client-peer S store))
-                stage (<? S (create-stage! user peer))
-                stream (stream-into-identity! stage [user ormap-id] stream-eval-fns val-atom)]
-            (<? S (s/create-ormap! stage :description "captures" :id ormap-id))
-            (connect! stage uri)
-            {:store store
-             :stage stage
-             :stream stream
-             :peer peer})))
+  (go-try
+   S
+   (let [store (<? S (new-mem-store))
+         peer (<? S (client-peer S store))
+         stage (<? S (create-stage! user peer))
+         stream (stream-into-identity! stage [user ormap-id] stream-eval-fns val-atom)]
+     (<? S (s/create-ormap! stage :description "captures" :id ormap-id))
+     (connect! stage uri)
+     {:store store
+      :stage stage
+      :stream stream
+      :peer peer})))
 
-(declare client-state)
+(declare replikativ-state)
 
-(defn add-capture! [app-state capture]
-  (s/assoc! (:stage app-state)
+(defn add-capture! [state capture]
+  (s/assoc! (:stage state)
             [user ormap-id]
             (uuid capture)
-            [['assoc capture]]))
+            [['add capture]]))
 
 (defn input-widget [component placeholder local-key]
   [:input {:value (get (om/get-state component) local-key)
            :placeholder placeholder
-           :on-change (fn [e] (om/update-state! component assoc local-key (.. e -target -value)))}])
+           :on-change (fn [e]
+                        (om/update-state!
+                         component
+                         assoc
+                         local-key
+                         (.. e -target -value)))}])
 
 (defui App
   Object
@@ -68,20 +76,20 @@
       (html
        [:div
         [:div.widget
-         [:h1 "Time Captures"]
+         [:h1 "Task Captures"]
          (input-widget this "Project" :input-project)
          (input-widget this "Task" :input-task)
          (input-widget this "Capture" :input-capture)
          [:button
-          {:on-click (fn [e] (let [new-capture
-                                   {:project input-project
-                                    :task input-task
-                                    :capture input-capture}]
-                               (do
-                                 (add-capture! client-state new-capture)
-                                 (om/update-state! this assoc :input-project "")
-                                 (om/update-state! this assoc :input-task "")
-                                 (om/update-state! this assoc :input-capture ""))) )}
+          {:on-click (fn [_]
+                       (let [new-capture {:project input-project
+                                          :task input-task
+                                          :capture input-capture}]
+                         (do
+                           (add-capture! replikativ-state new-capture)
+                           (om/update-state! this assoc :input-project "")
+                           (om/update-state! this assoc :input-task "")
+                           (om/update-state! this assoc :input-capture ""))))}
           "Add"]]
         [:div.widget
          [:table
@@ -97,19 +105,23 @@
               [:td capture]])
            captures)]]]))))
 
+
 (defn main [& args]
-  (go-try S (def client-state (<? S (setup-replikativ))))
-  (.error js/console "Stechuhr started ..."))
+  (go-try S (def replikativ-state (<? S (setup-replikativ))))
+  (.error js/console "Stechuhr connected ...."))
 
 (def reconciler
   (om/reconciler {:state val-atom}))
 
 (om/add-root! reconciler App (.getElementById js/document "app"))
 
+
 (comment
 
-  (->> val-atom
-       deref
-       :captures)
+  (remove #{1} #{1 2 3})
 
+  (-> val-atom
+      deref
+      :captures)
+  
   )

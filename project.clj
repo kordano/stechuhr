@@ -15,7 +15,6 @@
                  [org.omcljs/om "1.0.0-alpha46"]
                  [sablono "0.7.6"]
                  [http-kit "2.2.0"]
-                 [cljsjs/chartist "0.10.1-0"]
                  [compojure "1.5.2"]]
 
   :plugins [[lein-figwheel "0.5.8"]

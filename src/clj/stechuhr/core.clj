@@ -22,16 +22,17 @@
   (let [store (<?? S (new-mem-store))
         peer (<?? S (server-peer S store uri))]
     (run-server #'base-routes {:port 8080})
+    (println "http server started!")
     (<?? S (start peer))
+    (println "replikativ peer startet!")
     (<?? S (chan))))
 
-(defn -main [& args]
-  (start-server))
 
 (comment
 
   (start-server)
+  
 
-  #uuid "8c518048-1a31-4f0a-bd71-f49ef898db10")
+  )
 
 
