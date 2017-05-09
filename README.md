@@ -1,6 +1,6 @@
 # stechuhr
 
-Rapidly built prototype for simple task tracking and written in Clojure and Clojurescript powered by [replikativ](http://replikativ.io].
+Rapidly built prototype for simple task tracking and written in Clojure and Clojurescript powered by [replikativ](http://replikativ.io).
 
 A recorded screencast can be found [here](https://youtu.be/LW8v6Cr9BcM)
 
