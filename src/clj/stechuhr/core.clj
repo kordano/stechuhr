@@ -27,12 +27,5 @@
     (println "replikativ peer startet!")
     (<?? S (chan))))
 
-
-(comment
-
-  (start-server)
-  
-
-  )
-
-
+(defn -main [& args]
+  (start-server))
