@@ -1,11 +1,11 @@
 # stechuhr
 
-Rapidly built prototype for simple task tracking and written in Clojure and Clojurescript powered by [http://replikativ.io/](replikativ).
+Rapidly built prototype for simple task tracking and written in Clojure and Clojurescript powered by [replikativ](http://replikativ.io].
 
-A recorded screencast can be found [](here)
+A recorded screencast can be found [here](https://youtu.be/LW8v6Cr9BcM)
 
 ## Usage
-Make sure [https://leiningen.org/](leiningen) is installed:
+Make sure [leiningen](https://leiningen.org/) is installed:
 
 Build the web app:
 ```
