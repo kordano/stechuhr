@@ -19,8 +19,9 @@
   (not-found "<h1>404. Page not found.</h1>"))
 
 (defn start-server []
-  (let [store (<?? S (new-mem-store))
-        peer (<?? S (server-peer S store uri))]
+  (let [uri   "ws://127.0.0.1:31778"
+        store (<?? S (new-mem-store)) ; 1
+        peer  (<?? S (server-peer S store uri))]
     (run-server #'base-routes {:port 8080})
     (println "http server started!")
     (<?? S (start peer))
@@ -29,3 +30,9 @@
 
 (defn -main [& args]
   (start-server))
+
+(comment
+
+  (start-server)
+
+  )

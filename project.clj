@@ -11,7 +11,7 @@
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/clojurescript "1.9.229"]
-                 [io.replikativ/replikativ "0.2.1"]
+                 [io.replikativ/replikativ "0.2.4"]
                  [org.omcljs/om "1.0.0-alpha46"]
                  [sablono "0.7.6"]
                  [http-kit "2.2.0"]

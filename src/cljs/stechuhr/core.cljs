@@ -9,6 +9,7 @@
             [superv.async :refer [S] :as sasync]
             [om.next :as om :refer-macros [defui] :include-macros true]
             [om.dom :as dom :include-macros true]
+            [taoensso.timbre :as timbre]
             [sablono.core :as html :refer-macros [html]])
   (:require-macros [superv.async :refer [go-try <? go-loop-try]]
                    [cljs.core.async.macros :refer [go-loop]]))
@@ -24,26 +25,26 @@
 (defonce val-atom (atom {:captures #{}}))
 
 (def stream-eval-fns
-  {'add (fn [a new]
-            (swap! a update-in [:captures] conj new)
-            a)
-   'remove (fn [a new]
+  {'add    (fn [S a new]
+             (swap! a update-in [:captures] conj new)
+             a)
+   'remove (fn [S a new]
              (swap! a update-in [:captures] (fn [old] (set (remove #{new} old))))
              a)})
 
 (defn setup-replikativ []
   (go-try
    S
-   (let [store (<? S (new-mem-store))
-         peer (<? S (client-peer S store))
-         stage (<? S (create-stage! user peer))
+   (let [store  (<? S (new-mem-store))
+         peer   (<? S (client-peer S store))
+         stage  (<? S (create-stage! user peer))
          stream (stream-into-identity! stage [user ormap-id] stream-eval-fns val-atom)]
      (<? S (s/create-ormap! stage :description "captures" :id ormap-id))
      (connect! stage uri)
-     {:store store
-      :stage stage
+     {:store  store
+      :stage  stage
       :stream stream
-      :peer peer})))
+      :peer   peer})))
 
 (declare replikativ-state)
 
@@ -54,25 +55,25 @@
             [['add capture]]))
 
 (defn input-widget [component placeholder local-key]
-  [:input {:value (get (om/get-state component) local-key)
+  [:input {:value       (get (om/get-state component) local-key)
            :placeholder placeholder
-           :on-change (fn [e]
-                        (om/update-state!
-                         component
-                         assoc
-                         local-key
-                         (.. e -target -value)))}])
+           :on-change   (fn [e]
+                          (om/update-state!
+                           component
+                           assoc
+                           local-key
+                           (.. e -target -value)))}])
 
 (defui App
   Object
   (componentWillMount
-   [this]
-   (om/set-state! this {:input-project ""
-                        :input-task ""
-                        :input-capture ""}))
+    [this]
+    (om/set-state! this {:input-project ""
+                         :input-task    ""
+                         :input-capture ""}))
   (render [this]
     (let [{:keys [input-project input-task input-capture]} (om/get-state this)
-          {:keys [captures]} (om/props this)]
+          {:keys [captures]}                               (om/props this)]
       (html
        [:div
         [:div.widget
@@ -83,7 +84,7 @@
          [:button
           {:on-click (fn [_]
                        (let [new-capture {:project input-project
-                                          :task input-task
+                                          :task    input-task
                                           :capture input-capture}]
                          (do
                            (add-capture! replikativ-state new-capture)
@@ -123,5 +124,7 @@
   (-> val-atom
       deref
       :captures)
-  
+
+  (.log js/console (clj->js stream-eval-fns))
+
   )
