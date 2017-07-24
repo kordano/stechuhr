@@ -14,8 +14,10 @@
                  [io.replikativ/replikativ "0.2.4"]
                  [org.omcljs/om "1.0.0-alpha46"]
                  [sablono "0.7.6"]
+                 [com.taoensso/timbre "4.10.0"]
                  [http-kit "2.2.0"]
-                 [compojure "1.5.2"]]
+                 [compojure "1.5.2"]
+                 [cheshire "5.7.1"]]
 
   :plugins [[lein-figwheel "0.5.8"]
             [lein-sassy "1.0.8"]
