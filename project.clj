@@ -16,16 +16,17 @@
                  [sablono "0.7.6"]
                  [com.taoensso/timbre "4.10.0"]
                  [http-kit "2.2.0"]
-                 [compojure "1.5.2"]
+                 ;[compojure "1.5.2"]
+                 [compojure "1.6.0"]
                  [cheshire "5.7.1"]]
 
   :plugins [[lein-figwheel "0.5.8"]
-            [lein-sassy "1.0.8"]
+            ;[lein-sassy "1.0.8"]
             [lein-cljsbuild "1.1.4" :exclusions [[org.clojure/clojure]]]]
 
-  :sass {:src "resources/app/stylesheets"
-         :dst "resources/public/css/"}
-  :hooks [leiningen.sass]
+  ;:sass {:src "resources/app/stylesheets"
+  ;      :dst "resources/public/css/"}
+  ;:hooks [leiningen.sass]
 
   :source-paths ["src/cljs" "src/clj"]
 
